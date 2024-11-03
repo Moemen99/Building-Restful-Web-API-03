@@ -169,3 +169,123 @@ SurveyBasket/
 
 ---
 **Note**: The created project includes a sample WeatherForecast controller and model which can be used as reference or removed as needed.
+
+
+# ASP.NET Core Web API Project Structure
+
+## Solution Overview
+```mermaid
+graph TD
+    A[SurveyBasket Solution] --> B[SurveyBasket.Api Project]
+    B --> C[Dependencies]
+    C --> D[Packages]
+    D --> E[Swagger Package]
+    C --> F[Project References]
+    B --> G[Project Files/Folders]
+    G --> H[Properties]
+    G --> I[Controllers]
+    G --> J[Configuration Files]
+    G --> K[Code Files]
+```
+
+## Project Components
+
+### Dependencies
+1. **Packages**
+   - NuGet packages (e.g., Swagger)
+   - Third-party libraries
+   
+2. **Project References**
+   - References to other project layers
+   - External project dependencies
+
+### Project Structure
+```
+SurveyBasket.Api/
+├── Properties/
+│   └── launchSettings.json
+├── Controllers/
+├── appsettings.json
+├── appsettings.Development.json
+├── Program.cs
+└── WeatherForecast.cs
+```
+
+## Launch Settings Configuration
+
+### launchSettings.json
+This file is **development-only** and not included in deployment.
+
+```json
+{
+  "profiles": {
+    "http": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:5000"
+    },
+    "https": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:5001;http://localhost:5000"
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger"
+    }
+  }
+}
+```
+
+### Profile Types
+
+| Profile | Description | URL Configuration |
+|---------|-------------|-------------------|
+| HTTP | Basic HTTP profile | Single HTTP URL |
+| HTTPS | Secure HTTPS profile | HTTPS URL with HTTP redirect |
+| IIS Express | IIS-specific configuration | Uses IIS Settings with HTTPS redirect |
+
+### Key Settings Explained
+1. **Launch Browser**
+   - `"launchBrowser": true` - Opens browser automatically
+   - `"launchUrl": "swagger"` - Opens Swagger UI
+
+2. **Environment Variables**
+   - Development-specific settings
+   - Configuration for local development
+
+3. **Application URLs**
+   - HTTP: Single port configuration
+   - HTTPS: Dual ports with redirect
+   - IIS Express: Custom IIS configuration
+
+### Development vs. Deployment
+```mermaid
+graph LR
+    A[Launch Settings] --> B[Development Machine]
+    C[Server Configuration] --> D[Deployment Environment]
+```
+
+| Environment | Configuration Source |
+|-------------|---------------------|
+| Development | launchSettings.json |
+| Production | Server Configuration |
+
+## Running the Application
+1. Select desired profile from Visual Studio
+2. Application launches with:
+   - Command window showing port information
+   - Browser opening to Swagger UI
+   - HTTPS redirect if configured
+
+---
+**Note**: The launchSettings.json file is crucial for development but never deployed to production, where server configurations take precedence.
