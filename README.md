@@ -112,3 +112,60 @@ graph TD
 ---
 
 This documentation provides a comprehensive overview of APIs, their functionality, and benefits. For technical specifications and implementation details, please refer to the specific API documentation of your chosen framework or platform.
+
+
+
+
+# Creating ASP.NET Core Web API Project
+## Setting up SurveyBasket Solution
+
+### Step 1: Create New Project
+1. Open Visual Studio
+2. Click "Create a new project"
+3. Search and select "ASP.NET Core Web API"
+
+### Step 2: Configure Project Settings
+```mermaid
+graph TD
+    A[Project Configuration] --> B[Solution Name: SurveyBasket]
+    A --> C[Project Name: SurveyBasket.Api]
+    A --> D[Location: Your chosen path]
+```
+
+### Step 3: Configure Additional Settings
+| Setting | Value | Description |
+|---------|-------|-------------|
+| Framework | .NET Core | The target framework for the application |
+| Authentication | None | No authentication scheme selected initially |
+| HTTPS | ✓ Checked | Configure HTTPS for secure communication |
+| OpenAPI/Swagger | ✓ Checked | Enable API documentation and testing |
+| Controllers | ✓ Checked | Use controller-based API endpoints |
+
+### Project Structure Overview
+```
+SurveyBasket/
+├── SurveyBasket.sln
+└── SurveyBasket.Api/
+    ├── Controllers/
+    ├── Properties/
+    ├── appsettings.json
+    ├── appsettings.Development.json
+    ├── Program.cs
+    └── WeatherForecast.cs
+```
+
+## Key Components
+1. **Controllers folder**: Contains API endpoint definitions
+2. **Program.cs**: Application entry point and configuration
+3. **appsettings.json**: Application configuration files
+4. **WeatherForecast.cs**: Example model class
+
+## Next Steps
+1. Add necessary NuGet packages
+2. Configure application settings
+3. Create models and controllers
+4. Set up database connectivity
+5. Implement business logic
+
+---
+**Note**: The created project includes a sample WeatherForecast controller and model which can be used as reference or removed as needed.
