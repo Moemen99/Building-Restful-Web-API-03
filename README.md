@@ -289,3 +289,133 @@ graph LR
 
 ---
 **Note**: The launchSettings.json file is crucial for development but never deployed to production, where server configurations take precedence.
+
+# Program.cs - Application Entry Point
+
+## Overview
+The Program.cs file serves as the entry point for ASP.NET Core Web API applications. It's where the application bootstrapping and configuration occur.
+
+## Application Setup Flow
+```mermaid
+graph TD
+    A[Program.cs Entry Point] --> B[Create WebApplication Builder]
+    B --> C[Configure Services]
+    C --> D[Build Application]
+    D --> E[Configure Middleware Pipeline]
+    E --> F[Run Application]
+```
+
+## Key Components
+
+### 1. Builder Configuration
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+```
+Think of this as assembling a car:
+- The builder is like the car chassis
+- Services are like car components:
+  - Essential components (like engine) = Core services
+  - Optional features (like AC) = Additional services
+
+#### Service Registration
+```csharp
+// Essential Services
+builder.Services.AddControllers();
+
+// Additional Features
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+```
+
+| Service Type | Purpose | Analogy |
+|-------------|---------|---------|
+| AddControllers | Enable API controllers | Car engine (essential) |
+| AddSwaggerGen | API documentation | Car manual (optional) |
+| AddEndpointsApiExplorer | API endpoint discovery | Navigation system (optional) |
+
+### 2. Application Building
+```csharp
+var app = builder.Build();
+```
+This step finalizes the service configuration and prepares the application for middleware setup.
+
+### 3. Middleware Pipeline
+```mermaid
+graph LR
+    A[Request] --> B[Swagger]
+    B --> C[HTTPS Redirection]
+    C --> D[Authorization]
+    D --> E[Controllers]
+    E --> F[Response]
+```
+
+#### Development-Specific Middleware
+```csharp
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+```
+- Checks environment (configured in launchSettings.json)
+- Enables Swagger only in development environment
+- Security measure for production
+
+#### Common Middleware Components
+| Middleware | Purpose |
+|------------|---------|
+| UseSwagger | API documentation interface |
+| UseHttpsRedirection | Secure communication |
+| UseAuthorization | Security and access control |
+| MapControllers | Route handling |
+
+### 4. Application Launch
+```csharp
+app.Run();
+```
+Starts the web application and begins listening for requests.
+
+## Complete Program.cs Structure
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+// Service Configuration
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+// Build Application
+var app = builder.Build();
+
+// Middleware Pipeline
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+app.UseAuthorization();
+app.MapControllers();
+
+// Launch Application
+app.Run();
+```
+
+## Key Concepts
+1. **Service Configuration**: 
+   - Occurs before application building
+   - Defines available services and features
+
+2. **Middleware Pipeline**:
+   - Handles request processing
+   - Executes in sequential order
+   - Environment-specific configurations
+
+3. **Environment Awareness**:
+   - Development vs Production settings
+   - Conditional feature enabling
+   - Security considerations
+
+---
+**Note**: Understanding the Program.cs structure is crucial as it defines how your application bootstraps, what services are available, and how requests are processed.
